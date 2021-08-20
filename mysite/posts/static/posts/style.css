@@ -1,0 +1,20 @@
+.post_box {
+  background-color: lightgrey;
+  width: 50%;
+  border: 1px solid black;
+  padding: 20px;
+  margin: auto;
+}
+
+.post_credit{
+    font-size: small;
+    font-style: italic;
+}
+
+.comment_name{
+    font-weight: bold;
+}
+
+.comment_text{
+    text-indent: 2em;
+}
