@@ -1,12 +1,14 @@
-{% load static %}
+{% extends 'base.html' %}
+{% block title %} {{ post.post_title }} {% endblock %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'posts/style.css' %}">
+{% block content %}
+
 
 {% if post %}
 
-    <div class="post_box">
+    <div>
 
-        <p class="post_credit"> Posted by {{ post.user.first_name }}
+        <p> Posted by {{ post.user.first_name }}
             {{ post.user.last_name }} on {{ post.pub_date}} </p>
 
         <h2>{{ post.post_title }}</h2>
@@ -23,8 +25,8 @@
         {% for comment in post.comment_set.all  %}
 
 
-            <p class="comment_name">{{ comment.user.first_name }} {{ comment.user.last_name }}:</p>
-            <p class="comment_text"> {{ comment.comment_text }} </p>
+            <p>{{ comment.user.first_name }} {{ comment.user.last_name }}:</p>
+            <p> {{ comment.comment_text }} </p>
 
 
         {% endfor %}
@@ -34,3 +36,7 @@
 {% else %}
     <p> Post not found.</p>
 {% endif %}
+
+<a href="{% url 'posts:index' %}" class="btn btn-secondary">Back</a>
+
+{% endblock %}

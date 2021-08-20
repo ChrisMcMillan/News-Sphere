@@ -1,3 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Posts </h1>
 {% if latest_posts_list %}
     <ul>
     {% for post in latest_posts_list %}
@@ -7,3 +12,5 @@
 {% else %}
     <p>No posts are available.</p>
 {% endif %}
+
+{% endblock %}
