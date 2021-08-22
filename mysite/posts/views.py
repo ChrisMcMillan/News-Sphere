@@ -1,6 +1,4 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+
 from django.views import generic
 
 from .models import Post
@@ -17,3 +15,8 @@ class PostPage(generic.DetailView):
     model = Post
     template_name = 'posts/post_page.html'
 
+class AddPost(generic.CreateView):
+    model = Post
+    template_name = 'posts/add_post.html'
+    # fields = '__all__'
+    fields = ('user', 'post_title', 'post_image', 'post_description')
