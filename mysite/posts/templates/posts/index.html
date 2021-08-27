@@ -6,7 +6,21 @@
 {% if latest_posts_list %}
     <ul>
     {% for post in latest_posts_list %}
-        <li><a href="{% url 'posts:post_page' post.id %}">{{ post.post_title }}</a></li>
+        <li>
+
+            <a href="{% url 'posts:post_page' post.id %}">
+            {{ post.post_title }}
+            </a>
+
+            by {{ post.user.first_name }}
+
+            <small>
+                <a href="{% url 'posts:edit_post' post.id %}"> Edit </a>
+
+                <a href="{% url 'posts:delete_post' post.id %}"> Delete </a>
+            </small>
+
+        </li>
     {% endfor %}
     </ul>
 {% else %}

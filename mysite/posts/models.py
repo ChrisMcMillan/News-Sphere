@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
 
-
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post_title = models.CharField(max_length=50)

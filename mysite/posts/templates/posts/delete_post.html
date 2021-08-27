@@ -2,13 +2,13 @@
 
 {% block content %}
 
-<h1> Add Post </h1>
+<h1> Delete Post "{{ post.post_title }}"? </h1>
 
 <div class="form-group">
     <form  method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-success"> Add </button>
+
+        <button class="btn btn-success"> Delete Post </button>
     </form>
 </div>
 

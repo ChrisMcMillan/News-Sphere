@@ -1,7 +1,8 @@
 
 from django.views import generic
-
+from django.urls import reverse_lazy
 from .models import Post
+from .forms import PostForm
 
 class IndexView(generic.ListView):
     template_name = 'posts/index.html'
@@ -17,6 +18,18 @@ class PostPage(generic.DetailView):
 
 class AddPost(generic.CreateView):
     model = Post
+    form_class = PostForm
     template_name = 'posts/add_post.html'
     # fields = '__all__'
-    fields = ('user', 'post_title', 'post_image', 'post_description')
+    # fields = ('user', 'post_title', 'post_image', 'post_description')
+
+class EditPost(generic.UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'posts/update_post.html'
+    # fields = ('post_title', 'post_image', 'post_description')
+
+class DeletePost(generic.DeleteView):
+    model = Post
+    template_name = 'posts/delete_post.html'
+    success_url = reverse_lazy('posts:index')
