@@ -12,13 +12,20 @@
             {{ post.post_title }}
             </a>
 
-            by {{ post.user.first_name }}
+            by {{ post.user.first_name }} {{ post.user.last_name }}
 
-            <small>
-                <a href="{% url 'posts:edit_post' post.id %}"> Edit </a>
+            on {{ post.pub_date }}
 
-                <a href="{% url 'posts:delete_post' post.id %}"> Delete </a>
-            </small>
+            {% if user.is_authenticated %}
+                <small>
+                    <a href="{% url 'posts:edit_post' post.id %}"> Edit </a>
+
+                    <a href="{% url 'posts:delete_post' post.id %}"> Delete </a>
+                </small>
+            {% endif %}
+
+            <br/>
+            {{ post.post_description|slice:":200" }}
 
         </li>
     {% endfor %}
