@@ -3,6 +3,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from .models import Post
 from .forms import PostForm
+from django.shortcuts import render
 
 class IndexView(generic.ListView):
     template_name = 'posts/index.html'
@@ -33,3 +34,8 @@ class DeletePost(generic.DeleteView):
     model = Post
     template_name = 'posts/delete_post.html'
     success_url = reverse_lazy('posts:index')
+
+def CategoryPage(request, cats):
+
+    category_posts = Post.objects.filter(category__name__contains=cats)
+    return render(request, 'posts/categories.html', {'cats':cats, 'category_posts':category_posts})

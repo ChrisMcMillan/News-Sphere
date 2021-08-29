@@ -16,6 +16,8 @@
 
             on {{ post.pub_date }}
 
+            in <a href="{% url 'posts:category' post.category.name %}"> {{ post.category.name }} </a>
+
             {% if user.is_authenticated %}
                 <small>
                     <a href="{% url 'posts:edit_post' post.id %}"> Edit </a>

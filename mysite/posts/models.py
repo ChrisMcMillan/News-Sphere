@@ -3,11 +3,22 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
 
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('posts:index')
+
 class Post(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post_title = models.CharField(max_length=50)
     post_image = models.ImageField(null=True, blank=True, upload_to='uploads/images')
-    post_description = models.TextField(max_length=280)
+    post_description = models.TextField(max_length=5000)
     pub_date = models.DateTimeField('date published', default=timezone.now)
     votes = models.IntegerField(default=0)
 
@@ -15,7 +26,6 @@ class Post(models.Model):
         return self.post_title
 
     def get_absolute_url(self):
-        # return reverse('post_page', args=(str(self.id)))
         return reverse('posts:index')
 
 
