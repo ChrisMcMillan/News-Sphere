@@ -49,6 +49,22 @@
 
         {% endif %}
 
+        {% if cat_menu %}
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categories
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+            {% for cat in cat_menu %}
+                <li><a class="dropdown-item" href="{% url 'posts:category' cat.name|slugify %}"> {{ cat.name }} </a></li>
+            {% endfor %}
+
+
+          </ul>
+        </li>
+        {% endif %}
+
       </ul>
 
       <form class="d-flex">
