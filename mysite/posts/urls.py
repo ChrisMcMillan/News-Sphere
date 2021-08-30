@@ -11,4 +11,5 @@ urlpatterns = [
     path('edit_post/<int:pk>', views.EditPost.as_view(), name='edit_post'),
     path('delete_post/<int:pk>', views.DeletePost.as_view(), name='delete_post'),
     path('category/<str:cats>/', views.CategoryPage, name='category'),
+    path('vote/<int:pk>', views.VoteView, name='vote_post')
 ]

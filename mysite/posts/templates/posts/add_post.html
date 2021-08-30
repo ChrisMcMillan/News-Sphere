@@ -12,6 +12,12 @@
             <button class="btn btn-success"> Add </button>
         </form>
     </div>
+
+    <script>
+        let name = "{{ user.id }}";
+        document.getElementById("author_input").value = name;
+    </script>
+
 {% else %}
 
 Error: Invalid access :(

@@ -20,13 +20,16 @@ class Post(models.Model):
     post_image = models.ImageField(null=True, blank=True, upload_to='uploads/images')
     post_description = models.TextField(max_length=5000)
     pub_date = models.DateTimeField('date published', default=timezone.now)
-    votes = models.IntegerField(default=0)
+    votes = models.ManyToManyField(User, related_name='news_posts')
 
     def __str__(self):
         return self.post_title
 
     def get_absolute_url(self):
         return reverse('posts:index')
+
+    def total_votes(self):
+        return self.votes.count()
 
 
 class Comment(models.Model):

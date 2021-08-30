@@ -10,9 +10,22 @@
 
         <h3>Post Category: {{ post.category.name }}</h3>
         <p> Posted by {{ post.user.first_name }}
-            {{ post.user.last_name }} on {{ post.pub_date}} </p>
+            {{ post.user.last_name }} on {{ post.pub_date}}
+
+             {% if user.is_authenticated and user.id == post.user.id %}
+                <small>
+                    (
+                    <a href="{% url 'posts:edit_post' post.id %}"> Edit </a>
+                    |
+                    <a href="{% url 'posts:delete_post' post.id %}"> Delete </a>
+                    )
+                </small>
+            {% endif %}
+        </p>
 
         <h2>{{ post.post_title }}</h2>
+
+
 
         {% if post.post_image %}
             <img src="{{ post.post_image.url }}">
@@ -20,6 +33,13 @@
 
         <p> {{ post.post_description }} </p>
 
+        <form action="{% url 'posts:vote_post' post.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-primary btn-sm">
+                Up Vote </button>
+
+            Up Votes: {{ total_votes }}
+        </form>
 
         <h3>Comments:</h3>
 
