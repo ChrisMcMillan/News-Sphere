@@ -18,7 +18,7 @@ class IndexView(generic.ListView):
         return context
 
     def get_queryset(self):
-        """Return the last five published posts."""
+        """Return the last ten published posts."""
         return Post.objects.order_by('-pub_date')[:10]
 
 class PostPage(generic.DetailView):
@@ -33,6 +33,11 @@ class PostPage(generic.DetailView):
         data = get_object_or_404(Post, id=self.kwargs['pk'])
         total_votes = data.total_votes()
         context['total_votes'] = total_votes
+
+        upvoted = False
+        if data.votes.filter(id=self.request.user.id).exists():
+            upvoted = True
+        context['upvoted'] = upvoted
 
         return context
 
@@ -71,7 +76,13 @@ class DeletePost(generic.DeleteView):
 
 def VoteView(request, pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
-    post.votes.add(request.user)
+
+    if post.votes.filter(id=request.user.id).exists():
+        post.votes.remove(request.user)
+
+    else:
+        post.votes.add(request.user)
+
     return HttpResponseRedirect(reverse('posts:post_page', args=[str(pk)]))
 
 def CategoryPage(request, cats):
