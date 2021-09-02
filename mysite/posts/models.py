@@ -14,12 +14,18 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('posts:index')
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    bio = RichTextField(blank=True, null=True, max_length=5000)
+
+    def __str__(self):
+        return str(self.user)
+
 class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post_title = models.CharField(max_length=50)
     post_image = models.ImageField(null=True, blank=True, upload_to='uploads/images')
-    # post_description = models.TextField(max_length=5000)
     post_description = RichTextField(blank=True, null=True, max_length=5000)
     pub_date = models.DateTimeField('date published', default=timezone.now)
     votes = models.ManyToManyField(User, related_name='news_posts')

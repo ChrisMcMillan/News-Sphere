@@ -28,7 +28,7 @@
 
 
         {% if post.post_image %}
-            <img src="{{ post.post_image.url }}">
+            <img src="{{ post.post_image.url }}" class="img-fluid">
         {% endif %}
 
         <p> {{ post.post_description|safe }} </p>
