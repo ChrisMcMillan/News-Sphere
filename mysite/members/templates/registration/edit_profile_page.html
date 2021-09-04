@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated and user.id == profile.user.id  %}
+    <h1> Edit Profile Page </h1>
+
+    <div class="form-group">
+        <form  method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-success"> Update Profile Page </button>
+        </form>
+    </div>
+
+{% else %}
+
+Error: Invalid access :(
+
+{% endif %}
+
+{% endblock %}

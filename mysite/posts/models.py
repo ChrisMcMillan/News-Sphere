@@ -26,6 +26,9 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user)
 
+    def get_absolute_url(self):
+        return reverse('posts:index')
+
 class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
