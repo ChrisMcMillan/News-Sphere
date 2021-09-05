@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <h1> Add Comment </h1>
+
+    <div class="form-group">
+        <form  method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-success"> Add </button>
+        </form>
+    </div>
+
+{% else %}
+
+Error: Invalid access :(
+
+{% endif %}
+
+{% endblock %}

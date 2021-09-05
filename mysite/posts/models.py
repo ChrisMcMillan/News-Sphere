@@ -50,7 +50,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     comment_text = models.TextField(max_length=280)
     pub_date = models.DateTimeField('date published', default=timezone.now)
     votes = models.IntegerField(default=0)

@@ -7,7 +7,6 @@
 
 {% if post %}
 
-    <div>
 
         <h3>Post Category: {{ post.category.name }}</h3>
         <p> Posted by {{ post.user.first_name }}
@@ -100,22 +99,30 @@
             </div>
           </div>
         </div>
-
-
-
+        <br>
+        <hr>
+        <br>
         <h3>Comments:</h3>
+        <br>
+        {% if not post.comments.all %}
+            No comments.
+        {% else %}
+            {% for comment in post.comments.all  %}
 
-        {% for comment in post.comment_set.all  %}
+
+                <strong>
+                    <p>{{ comment.user.first_name }} {{ comment.user.last_name }} - {{ comment.pub_date }}</p>
+
+                </strong>
+                <p> {{ comment.comment_text }} </p>
 
 
-            <p>{{ comment.user.first_name }} {{ comment.user.last_name }}:</p>
-            <p> {{ comment.comment_text }} </p>
+            {% endfor %}
+        {% endif %}
 
 
-        {% endfor %}
 
-    </div>
-
+    <a href="{% url 'posts:add_comment' post.pk %}" class="btn btn-primary">Add Comment</a>
 {% else %}
     <p> Post not found.</p>
 {% endif %}

@@ -1,8 +1,8 @@
 
 from django.views import generic
 from django.urls import reverse_lazy, reverse
-from .models import Post, Category
-from .forms import PostForm
+from .models import Post, Category, Comment
+from .forms import PostForm, AddCommentForm
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
@@ -51,6 +51,17 @@ class AddPost(generic.CreateView):
         context = super().get_context_data(**kwargs)
         context['cat_menu'] = cat_menu
         return context
+
+class AddCommentView(generic.CreateView):
+    model = Comment
+    form_class = AddCommentForm
+    template_name = 'posts/add_comment.html'
+    success_url = reverse_lazy('posts:index')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
 
 class EditPost(generic.UpdateView):
     model = Post
