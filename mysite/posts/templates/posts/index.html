@@ -4,28 +4,37 @@
 
 <h1> Posts </h1>
 {% if latest_posts_list %}
-    <ul>
+    <ul class="list-group">
     {% for post in latest_posts_list %}
-        <li>
+        <li class="list-group-item">
 
-            <a href="{% url 'posts:post_page' post.id %}">
-            {{ post.post_title }}
-            </a>
+            <div class="d-flex w-100 justify-content-between">
 
-            by {{ post.user.first_name }} {{ post.user.last_name }}
+                <small>
+                    <a href="{% url 'posts:category' post.category.name|slugify %}">
+                    {{ post.category.name }}</a>
 
-            on {{ post.pub_date }}
+                    | Posted by {{ post.user.first_name }} {{ post.user.last_name }}
 
-            in <a href="{% url 'posts:category' post.category.name|slugify %}"> {{ post.category.name }} </a>
+                     {% if user.is_authenticated and user.id == post.user.id %}
+                        <small>(
+                            <a href="{% url 'posts:edit_post' post.id %}"> Edit </a>
+                            |
+                            <a href="{% url 'posts:delete_post' post.id %}"> Delete </a>
+                            )
+                        </small>
+                    {% endif %}
 
-            {% if user.is_authenticated and user.id == post.user.id %}
-                <small>(
-                    <a href="{% url 'posts:edit_post' post.id %}"> Edit </a>
-                    |
-                    <a href="{% url 'posts:delete_post' post.id %}"> Delete </a>
-                    )
                 </small>
-            {% endif %}
+
+                {{ post.pub_date }}
+
+             </div>
+
+              <h5 class="mb-1">  <a href="{% url 'posts:post_page' post.id %}">
+                {{ post.post_title }}
+              </a> </h5>
+
 
             <br/>
             {{ post.post_description|slice:":200"|safe }}
